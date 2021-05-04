@@ -3,10 +3,11 @@ import { BigNumber, BigNumberish } from "@ethersproject/bignumber";
 import { Contract, Event } from "@ethersproject/contracts";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { expect, use } from "chai";
-import * as chaiAsPromised from "chai-as-promised";
+import chaiAsPromised from "chai-as-promised";
 import { ethers, network } from "hardhat";
+import erc20Abi from "../tasks/util/erc20Abi.json";
+import { notNull } from "../tasks/util/typeAssertions";
 import { Thanos } from "../typechain/Thanos";
-import erc20Abi from "./resources/erc20Abi";
 
 // TypeScript trick to import module's type extensions without importing module.
 (_: typeof import("@nomiclabs/hardhat-ethers")) => 0;
@@ -64,7 +65,7 @@ describe("Thanos", () => {
     await grantLink(thanos.address, FEE);
     const transaction = await thanos.snap(getRandomSeed());
     const { events } = await transaction.wait();
-    const requestId = getRequestIdFromEvents(events);
+    const requestId = getRequestIdFromEvents(notNull(events));
     expect(requestId).to.exist;
   });
 
@@ -72,7 +73,7 @@ describe("Thanos", () => {
     await grantLink(thanos.address, FEE);
     const transaction = await thanos.snap(getRandomSeed());
     const { events } = await transaction.wait();
-    const requestId = getRequestIdFromEvents(events);
+    const requestId = getRequestIdFromEvents(notNull(events));
     await produceRandomness(requestId, 42);
     const result = await thanos.getSnapState();
     expect(result).to.equal(2);
@@ -82,7 +83,7 @@ describe("Thanos", () => {
     await grantLink(thanos.address, FEE);
     const transaction = await thanos.snap(getRandomSeed());
     const { events } = await transaction.wait();
-    const requestId = getRequestIdFromEvents(events);
+    const requestId = getRequestIdFromEvents(notNull(events));
     await produceRandomness(requestId, 43);
     const result = await thanos.getSnapState();
     expect(result).to.equal(3);
@@ -143,9 +144,9 @@ describe("Thanos", () => {
       (e) =>
         e.address === thanos.address &&
         e.event === "SnapStarted" &&
-        e.args.snapper === signer.address
+        e.args?.snapper === signer.address
     );
-    return event.args.requestId;
+    return event?.args?.requestId;
   }
 });
 

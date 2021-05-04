@@ -1,16 +1,9 @@
 import { Contract } from "ethers";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
+import { constructorArgs } from "./util/constants";
 
 // TypeScript trick to import module's type extensions without importing module.
 (_: typeof import("@nomiclabs/hardhat-ethers")) => 0;
-
-const VRF_ADDRESS = "0xdD3782915140c8f3b190B5D67eAc6dc5760C46E9";
-const LINK_ADDRESS = "0xa36085f69e2889c224210f603d836748e7dc0088";
-const KEY_HASH =
-  "0x6c3699283bda56ad74f6b855546325b68d482e983852a7a82979cc4807b641f4";
-const FEE = "100000000000000000";
-
-const constructorArgs = [VRF_ADDRESS, LINK_ADDRESS, KEY_HASH, FEE] as const;
 
 export async function deploy({
   ethers,
