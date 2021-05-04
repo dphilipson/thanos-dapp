@@ -13,7 +13,11 @@ contract Thanos is VRFConsumerBase {
     mapping(address => SnapState) private s_results;
 
     event SnapStarted(bytes32 indexed requestId, address indexed snapper);
-    event SnapResolved(bytes32 indexed requestId, bool indexed isDusted);
+    event SnapResolved(
+        bytes32 indexed requestId,
+        address indexed snapper,
+        bool indexed isDusted
+    );
 
     constructor(
         address vrfCoordinator,
@@ -46,16 +50,12 @@ contract Thanos is VRFConsumerBase {
         override
     {
         bool isDusted = randomness % 2 == 0;
-        s_results[s_snappers[requestId]] = isDusted
-            ? SnapState.DUSTED
-            : SnapState.ALIVE;
-        emit SnapResolved(requestId, isDusted);
+        address snapper = s_snappers[requestId];
+        s_results[snapper] = isDusted ? SnapState.DUSTED : SnapState.ALIVE;
+        emit SnapResolved(requestId, snapper, isDusted);
     }
 
-    function getSnapResult() public view returns (string memory) {
-        SnapState state = s_results[msg.sender];
-        require(state != SnapState.NOT_STARTED, "No snap has occurred.");
-        require(state != SnapState.IN_PROGRESS, "Snap in progress.");
-        return state == SnapState.DUSTED ? "You are dusted." : "You are alive!";
+    function getSnapState() public view returns (SnapState) {
+        return s_results[msg.sender];
     }
 }

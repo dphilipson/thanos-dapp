@@ -43,8 +43,8 @@ describe("Thanos", () => {
     thanos = await deployThanos();
   });
 
-  it("prevents getting the result before snapping", async () => {
-    expect(thanos.getSnapResult()).to.eventually.be.rejectedWith(/No snap/);
+  it("returns NOT_STARTED as initial snap result", async () => {
+    expect(await thanos.getSnapState()).to.equal(0);
   });
 
   it("prevents snapping if no LINK stored", async () => {
@@ -74,8 +74,8 @@ describe("Thanos", () => {
     const { events } = await transaction.wait();
     const requestId = getRequestIdFromEvents(events);
     await produceRandomness(requestId, 42);
-    const result = await thanos.getSnapResult();
-    expect(result).to.contain("dusted");
+    const result = await thanos.getSnapState();
+    expect(result).to.equal(2);
   });
 
   it("spares on odd numbers", async () => {
@@ -84,8 +84,8 @@ describe("Thanos", () => {
     const { events } = await transaction.wait();
     const requestId = getRequestIdFromEvents(events);
     await produceRandomness(requestId, 43);
-    const result = await thanos.getSnapResult();
-    expect(result).to.contain("alive");
+    const result = await thanos.getSnapState();
+    expect(result).to.equal(3);
   });
 
   async function deployThanos(): Promise<Thanos> {
