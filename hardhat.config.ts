@@ -1,6 +1,7 @@
 import * as dotenv from "dotenv";
 import { task, HardhatUserConfig } from "hardhat/config";
 import "@typechain/hardhat";
+import "@nomiclabs/hardhat-etherscan";
 import "@nomiclabs/hardhat-waffle";
 
 dotenv.config();
@@ -18,7 +19,7 @@ task("accounts", "Prints the list of accounts", async (_, hre) => {
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
 
-const { KOVAN_ALCHEMY_URL, KOVAN_PRIVATE_KEY } = process.env;
+const { ETHERSCAN_API_KEY, KOVAN_ALCHEMY_URL, KOVAN_PRIVATE_KEY } = process.env;
 
 const config: HardhatUserConfig = {
   solidity: "0.7.3",
@@ -29,5 +30,6 @@ const config: HardhatUserConfig = {
       forking: { url: KOVAN_ALCHEMY_URL, blockNumber: 24612367 },
     },
   },
+  etherscan: { apiKey: ETHERSCAN_API_KEY },
 };
 export default config;
