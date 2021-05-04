@@ -1,9 +1,8 @@
+# OS X
+.DS_Store
+
+# NPM/Yarn
 node_modules
+yarn-error.log
+
 .env
-
-#Hardhat files
-cache
-artifacts
-
-# TypeChain
-typechain
