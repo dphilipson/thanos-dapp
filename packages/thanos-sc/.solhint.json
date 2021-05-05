@@ -1,0 +1,8 @@
+{
+  "extends": "solhint:recommended",
+  "rules": {
+    "compiler-version": ["error", "^0.7.0"],
+    "func-visibility": false,
+    "mark-callable-contracts": false
+  }
+}

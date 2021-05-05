@@ -3,6 +3,7 @@ import * as dotenv from "dotenv";
 import { task, HardhatUserConfig } from "hardhat/config";
 import "@typechain/hardhat";
 import "@nomiclabs/hardhat-etherscan";
+import "@nomiclabs/hardhat-solhint";
 import "@nomiclabs/hardhat-waffle";
 import { deployAndVerify, verify } from "./tasks/deploys";
 import { develop } from "./tasks/develop";
