@@ -1,7 +1,8 @@
 import { Contract, Signer } from "ethers";
 import thanosSpec from "../sc-generated/artifacts/contracts/Thanos.sol/Thanos.json";
 import { Thanos } from "../sc-generated/typechain/Thanos";
-import { THANOS_ADDRESS } from "./constants";
+import { getThanosAddress } from "./constants";
+import { EthNetwork } from "./metamask";
 
 export enum SnapState {
   NOT_STARTED,
@@ -13,9 +14,9 @@ export enum SnapState {
 export class ThanosClient {
   private readonly thanos: Thanos;
 
-  constructor(signer: Signer) {
+  constructor(signer: Signer, network: EthNetwork) {
     this.thanos = new Contract(
-      THANOS_ADDRESS,
+      getThanosAddress(network),
       thanosSpec.abi,
       signer
     ) as Thanos;

@@ -23,6 +23,7 @@ export enum EthNetwork {
   RINKEBY = "rinkeby",
   GOERLI = "goerli",
   KOVAN = "kovan",
+  HARDHAT = "hardhat",
 }
 
 const networksByChainId: Record<number, EthNetwork> = {
@@ -31,6 +32,7 @@ const networksByChainId: Record<number, EthNetwork> = {
   4: EthNetwork.RINKEBY,
   5: EthNetwork.GOERLI,
   42: EthNetwork.KOVAN,
+  31337: EthNetwork.HARDHAT,
 };
 
 export interface MetamaskState {

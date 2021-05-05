@@ -1,3 +1,4 @@
+import { exec } from "child_process";
 import * as dotenv from "dotenv";
 import { task, HardhatUserConfig } from "hardhat/config";
 import "@typechain/hardhat";
@@ -6,7 +7,6 @@ import "@nomiclabs/hardhat-waffle";
 import { deployAndVerify, verify } from "./tasks/deploys";
 import { develop } from "./tasks/develop";
 import { notNull } from "./tasks/util/typeAssertions";
-import { exec } from "child_process";
 
 dotenv.config();
 
@@ -59,8 +59,8 @@ const config: HardhatUserConfig = {
   networks: {
     kovan: { url: KOVAN_ALCHEMY_URL, accounts: [notNull(KOVAN_PRIVATE_KEY)] },
     hardhat: {
-      // Current as of May 2, 2001, 2:37pm.
-      forking: { url: notNull(KOVAN_ALCHEMY_URL), blockNumber: 24612367 },
+      // Current as of May 5, 2021, 4:33pm.
+      forking: { url: notNull(KOVAN_ALCHEMY_URL), blockNumber: 24669957 },
     },
   },
   etherscan: { apiKey: ETHERSCAN_API_KEY },

@@ -11,7 +11,7 @@ import {
 } from "react";
 import { Button, Flex, jsx, Text } from "theme-ui";
 import { buttonSx, delayedFadeInSx } from "../styles";
-import { USER_REJECTED } from "../util/constants";
+import { IS_PROD, USER_REJECTED } from "../util/constants";
 import { EthNetwork, useMetamask } from "../util/metamask";
 import { SnapState, ThanosClient } from "../util/thanos";
 
@@ -51,13 +51,16 @@ const SnapView = memo(function SnapView(): ReactElement {
 
   useEffect(() => {
     // Start the real action once the provider connects.
-    if (metamask.network !== EthNetwork.KOVAN) {
+    const { connectedProvider, network } = metamask;
+    if (
+      network !== EthNetwork.KOVAN &&
+      (IS_PROD || network !== EthNetwork.HARDHAT)
+    ) {
       return;
     }
-    const { connectedProvider } = metamask;
     if (connectedProvider && !thanosRef.current) {
       const signer = new providers.Web3Provider(connectedProvider).getSigner();
-      thanosRef.current = new ThanosClient(signer);
+      thanosRef.current = new ThanosClient(signer, network);
       syncSnapState();
       thanosRef.current
         .waitForSnapResult()
@@ -74,8 +77,21 @@ const SnapView = memo(function SnapView(): ReactElement {
     if (!metamask.isInitialized) {
       return undefined;
     }
-    if (metamask.network !== EthNetwork.KOVAN) {
-      return <Text>Please switch to Kovan.</Text>;
+    if (IS_PROD) {
+      if (metamask.network !== EthNetwork.KOVAN) {
+        return <Text>Please switch to Kovan.</Text>;
+      }
+    } else {
+      if (
+        metamask.network !== EthNetwork.KOVAN &&
+        metamask.network !== EthNetwork.HARDHAT
+      ) {
+        return (
+          <Text>
+            Please switch to Hardhat (localhost:8545, chain ID 31337) or Kovan.
+          </Text>
+        );
+      }
     }
     if (metamask.isConnecting) {
       return (
@@ -135,7 +151,11 @@ const SnapView = memo(function SnapView(): ReactElement {
           </Text>
         );
       case SnapState.ALIVE:
-        return <Text key="alive">You are alive!</Text>;
+        return (
+          <Text key="alive" sx={delayedFadeInSx}>
+            You are alive!
+          </Text>
+        );
     }
   }
 
