@@ -1,0 +1,49 @@
+{
+  "name": "thanos-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "thanos-app",
+  "author": "David Philipson",
+  "keywords": [
+    "gatsby"
+  ],
+  "scripts": {
+    "build": "gatsby build",
+    "clean": "gatsby clean && rm -rf src/sc-artifacts/*",
+    "develop": "gatsby develop",
+    "format": "prettier --write '**/*.{js,json,md,ts,tsx}'",
+    "pre-commit": "lint-staged",
+    "serve": "gatsby serve",
+    "start": "gatsby develop"
+  },
+  "lint-staged": {
+    "**/*.{ts,tsx}": [
+      "eslint --fix"
+    ]
+  },
+  "dependencies": {
+    "ethers": "^5.1.4",
+    "gatsby": "^3.4.0",
+    "gatsby-plugin-react-helmet": "^4.4.0",
+    "gatsby-plugin-theme-ui": "^0.7.5",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-helmet": "^6.1.0",
+    "theme-ui": "^0.7.5",
+    "tslib": "^2.2.0",
+    "typescript": "^4.2.4"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@types/react-helmet": "^6.1.0",
+    "@types/theme-ui": "^0.3.7",
+    "@typescript-eslint/eslint-plugin": "^4.8.1",
+    "@typescript-eslint/parser": "^4.8.1",
+    "eslint": "^7.12.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "lint-staged": "^10.5.1"
+  }
+}

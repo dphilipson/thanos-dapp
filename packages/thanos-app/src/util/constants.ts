@@ -1,0 +1,10 @@
+const DEV_THANOS_ADDRESS = "0x22058Fa4a9594a22eF208Cad79aeC5235B980E96";
+const PROD_THANOS_ADDRESS = "0x3B04075Fe798D78c871Ce87eD30D366670eb36a5";
+
+export const THANOS_ADDRESS =
+  process.env.NODE_ENV === "production"
+    ? PROD_THANOS_ADDRESS
+    : DEV_THANOS_ADDRESS;
+
+/** EIP-1193 userRejectedRequest error. */
+export const USER_REJECTED = 4001;
