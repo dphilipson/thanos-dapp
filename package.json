@@ -10,6 +10,7 @@
     "packages/*"
   ],
   "scripts": {
+    "build": "yarn workspace thanos-sc prepare && yarn workspace thanos-app build",
     "develop": "lerna run develop --stream",
     "format": "lerna run format --stream",
     "pre-commit": "lerna run --concurrency 1 --stream --since HEAD --exclude-dependents pre-commit && lint-staged",

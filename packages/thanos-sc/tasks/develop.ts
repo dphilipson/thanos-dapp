@@ -1,6 +1,5 @@
 import { BigNumber } from "@ethersproject/bignumber";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
-import { Thanos } from "../typechain/Thanos";
 import { getConstructorArgs, networkConstants } from "./util/constants";
 import {
   getRandomness,
@@ -10,6 +9,9 @@ import {
 
 // TypeScript trick to import module's type extensions without importing module.
 (_: typeof import("@nomiclabs/hardhat-ethers")) => 0;
+
+// This may not be built yet when tasks need to load.
+type Thanos = import("../typechain/Thanos").Thanos;
 
 export async function develop(hre: HardhatRuntimeEnvironment): Promise<void> {
   console.log("Deploying Thanos.");
