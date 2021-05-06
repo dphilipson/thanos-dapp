@@ -5,9 +5,10 @@
   "private": true,
   "scripts": {
     "deploy": "./scripts deploy.ts",
-    "develop": "TS_TRANSPILE_ONLY=1 hardhat develop",
+    "develop": "TS_NODE_TRANSPILE_ONLY=1 hardhat develop",
     "pre-commit": "lint-staged",
-    "prepare": "TS_TRANSPILE_ONLY=1 hardhat compile"
+    "prepare": "TS_NODE_TRANSPILE_ONLY=1 hardhat compile",
+    "test": "TS_NODE_TRANSPILE_ONLY=1 hardhat test"
   },
   "lint-staged": {
     "**/*.ts": [
