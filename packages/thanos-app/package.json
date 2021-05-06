@@ -8,8 +8,8 @@
     "gatsby"
   ],
   "scripts": {
-    "build": "gatsby build",
-    "clean": "gatsby clean && rm -rf src/sc-artifacts/*",
+    "build": "gatsby clean && gatsby build",
+    "clean": "gatsby clean",
     "develop": "gatsby develop",
     "format": "prettier --write '**/*.{js,json,md,ts,tsx}'",
     "pre-commit": "lint-staged",

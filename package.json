@@ -11,6 +11,7 @@
   ],
   "scripts": {
     "build": "yarn workspace thanos-sc prepare && yarn workspace thanos-app build",
+    "deploy": "source .env && yarn build && netlify deploy --dir packages/thanos-app/public",
     "develop": "lerna run develop --stream",
     "format": "lerna run format --stream",
     "pre-commit": "lerna run --concurrency 1 --stream --since HEAD --exclude-dependents pre-commit && lint-staged",
@@ -25,6 +26,7 @@
     "husky": "^6.0.0",
     "lerna": "^4.0.0",
     "lint-staged": "^10.5.4",
+    "netlify-cli": "^3.26.2",
     "prettier": "^2.2.1"
   }
 }

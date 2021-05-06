@@ -73,6 +73,11 @@ const SnapView = memo(function SnapView(): ReactElement {
   }, [metamask.connectedProvider]);
 
   function renderContent(): ReactElement | undefined {
+    if (typeof window === "undefined") {
+      // Don't render during server-side rendering. We don't want a flash of
+      // text from SSR.
+      return undefined;
+    }
     if (!metamask.isInstalled) {
       return <Text>Metamask is required.</Text>;
     }
