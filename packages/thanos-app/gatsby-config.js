@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: "thanos-app",
+    title: "Thanos Dapp",
   },
   plugins: [
     {
@@ -9,8 +9,6 @@ module.exports = {
         name: "Thanos Dapp",
         short_name: "Thanos",
         start_url: "/",
-        backgroundColor: "#293742",
-        themeColor: "#293742",
         display: "minimal-ui",
         icon: "src/images/icon.png",
       },

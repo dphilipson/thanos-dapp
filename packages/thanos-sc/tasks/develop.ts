@@ -1,11 +1,11 @@
 import { BigNumber } from "@ethersproject/bignumber";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { Thanos } from "../typechain/Thanos";
-import { devConstructorArgs, FEE } from "./util/constants";
+import { getConstructorArgs, networkConstants } from "./util/constants";
 import {
   getRandomness,
   grantLink,
-  produceRandomness,
+  fulfillRandomness,
 } from "./util/impersonation";
 
 // TypeScript trick to import module's type extensions without importing module.
@@ -14,14 +14,20 @@ import {
 export async function develop(hre: HardhatRuntimeEnvironment): Promise<void> {
   console.log("Deploying Thanos.");
   const Thanos = await hre.ethers.getContractFactory("Thanos");
-  const thanos = (await Thanos.deploy(...devConstructorArgs)) as Thanos;
+  const thanos = (await Thanos.deploy(
+    ...getConstructorArgs("hardhat")
+  )) as Thanos;
   console.log("Thanos deployed to:", thanos.address);
   console.log("Granting LINK to Thanos.");
-  await grantLink(hre, thanos.address, BigNumber.from(FEE).mul(100));
+  await grantLink(
+    hre,
+    thanos.address,
+    BigNumber.from(networkConstants.kovan.fee).mul(100)
+  );
   thanos.on(thanos.filters.SnapStarted(null, null), (_, __, { args }) => {
     const { requestId } = args;
     const randomness = getRandomness();
-    produceRandomness(hre, thanos, requestId, randomness);
+    fulfillRandomness(hre, thanos, requestId, randomness);
     console.log("Produced randomness:", randomness);
   });
   console.log("LINK granted.");

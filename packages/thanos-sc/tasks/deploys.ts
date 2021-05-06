@@ -1,25 +1,28 @@
 import { Contract } from "ethers";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
-import { constructorArgs } from "./util/constants";
+import { getConstructorArgs } from "./util/constants";
 
 // TypeScript trick to import module's type extensions without importing module.
 (_: typeof import("@nomiclabs/hardhat-ethers")) => 0;
 
 export async function deploy({
   ethers,
+  network,
 }: HardhatRuntimeEnvironment): Promise<Contract> {
+  const args = getConstructorArgs(network.name);
   const Thanos = await ethers.getContractFactory("Thanos");
-  const thanos = await Thanos.deploy(...constructorArgs);
+  const thanos = await Thanos.deploy(...args);
   return thanos;
 }
 
 export function verify(
   address: string,
-  { run }: HardhatRuntimeEnvironment
+  { run, network }: HardhatRuntimeEnvironment
 ): Promise<void> {
+  const args = getConstructorArgs(network.name);
   return run("verify", {
     address: address,
-    constructorArgsParams: constructorArgs,
+    constructorArgsParams: args,
   });
 }
 

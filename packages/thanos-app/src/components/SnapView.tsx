@@ -15,6 +15,11 @@ import { IS_PROD, USER_REJECTED } from "../util/constants";
 import { EthNetwork, useMetamask } from "../util/metamask";
 import { SnapState, ThanosClient } from "../util/thanos";
 
+const VALID_NETWORKS = new Set([EthNetwork.KOVAN, EthNetwork.RINKEBY]);
+if (!IS_PROD) {
+  VALID_NETWORKS.add(EthNetwork.HARDHAT);
+}
+
 const SnapView = memo(function SnapView(): ReactElement {
   const metamask = useMetamask();
   const [snapState, setSnapState] = useState<SnapState>();
@@ -52,10 +57,7 @@ const SnapView = memo(function SnapView(): ReactElement {
   useEffect(() => {
     // Start the real action once the provider connects.
     const { connectedProvider, network } = metamask;
-    if (
-      network !== EthNetwork.KOVAN &&
-      (IS_PROD || network !== EthNetwork.HARDHAT)
-    ) {
+    if (!network || !VALID_NETWORKS.has(network)) {
       return;
     }
     if (connectedProvider && !thanosRef.current) {
@@ -77,21 +79,14 @@ const SnapView = memo(function SnapView(): ReactElement {
     if (!metamask.isInitialized) {
       return undefined;
     }
-    if (IS_PROD) {
-      if (metamask.network !== EthNetwork.KOVAN) {
-        return <Text>Please switch to Kovan.</Text>;
-      }
-    } else {
-      if (
-        metamask.network !== EthNetwork.KOVAN &&
-        metamask.network !== EthNetwork.HARDHAT
-      ) {
-        return (
-          <Text>
-            Please switch to Hardhat (localhost:8545, chain ID 31337) or Kovan.
-          </Text>
-        );
-      }
+    if (metamask.network && !VALID_NETWORKS.has(metamask.network)) {
+      return (
+        <Text>
+          {IS_PROD
+            ? "Please switch to Rinkeby or Kovan."
+            : "Please switch to Hardhat (localhost:8545, chain ID 31337), Rinkeby, or Kovan."}
+        </Text>
+      );
     }
     if (metamask.isConnecting) {
       return (

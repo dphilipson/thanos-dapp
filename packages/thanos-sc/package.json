@@ -4,7 +4,7 @@
   "description": "Smart contract for Thanos dapp.",
   "private": true,
   "scripts": {
-    "deploy-kovan": "TS_TRANSPILE_ONLY=1 hardhat --network kovan deploy-thanos",
+    "deploy": "./scripts deploy.ts",
     "develop": "TS_TRANSPILE_ONLY=1 hardhat develop",
     "pre-commit": "lint-staged",
     "prepare": "TS_TRANSPILE_ONLY=1 hardhat compile"

@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { memo, ReactElement } from "react";
 import { Flex, jsx } from "theme-ui";
+import AccountText from "../components/AccountText";
 import SnapView from "../components/SnapView";
 import Trappings from "../components/Trappings";
 
@@ -19,6 +20,9 @@ const IndexPage = memo(function IndexPage(): ReactElement {
         }}
       >
         <SnapView />
+      </Flex>
+      <Flex mt={3} sx={{ position: "relative", justifyContent: "center" }}>
+        <AccountText />
       </Flex>
     </Trappings>
   );

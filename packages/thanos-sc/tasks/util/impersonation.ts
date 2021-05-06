@@ -2,9 +2,9 @@ import { BigNumberish, Signer } from "ethers";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { Thanos } from "../../typechain/Thanos";
 import {
-  LINK_ADDRESS,
   LINK_OWNER_ADDRESS,
   MOCK_VRF_ADDRESS,
+  networkConstants,
 } from "./constants";
 import erc20Abi from "./erc20Abi.json";
 
@@ -17,12 +17,16 @@ export async function grantLink(
   amount: BigNumberish
 ): Promise<void> {
   await withImpersonation(hre, LINK_OWNER_ADDRESS, async (signer) => {
-    const link = new hre.ethers.Contract(LINK_ADDRESS, erc20Abi, signer);
+    const link = new hre.ethers.Contract(
+      networkConstants.hardhat.linkAddress,
+      erc20Abi,
+      signer
+    );
     await link.transfer(address, amount);
   });
 }
 
-export async function produceRandomness(
+export async function fulfillRandomness(
   hre: HardhatRuntimeEnvironment,
   thanos: Thanos,
   requestId: string,

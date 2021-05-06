@@ -1,5 +1,5 @@
 import { exec } from "child_process";
-import * as dotenv from "dotenv";
+import { config as dotenvConfig } from "dotenv";
 import { task, HardhatUserConfig } from "hardhat/config";
 import "@typechain/hardhat";
 import "@nomiclabs/hardhat-etherscan";
@@ -9,7 +9,7 @@ import { deployAndVerify, verify } from "./tasks/deploys";
 import { develop } from "./tasks/develop";
 import { notNull } from "./tasks/util/typeAssertions";
 
-dotenv.config();
+dotenvConfig();
 
 // This is a sample Hardhat task. To learn how to create your zown go to
 // https://hardhat.org/guides/create-task.html
@@ -53,12 +53,21 @@ task("compile").setAction(async (_, __, runSuper) => {
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
 
-const { ETHERSCAN_API_KEY, KOVAN_ALCHEMY_URL, KOVAN_PRIVATE_KEY } = process.env;
+const {
+  ETHERSCAN_API_KEY,
+  KOVAN_ALCHEMY_URL,
+  RINKEBY_ALCHEMY_URL,
+  TESTNET_PRIVATE_KEY,
+} = process.env;
 
 const config: HardhatUserConfig = {
   solidity: "0.7.3",
   networks: {
-    kovan: { url: KOVAN_ALCHEMY_URL, accounts: [notNull(KOVAN_PRIVATE_KEY)] },
+    kovan: { url: KOVAN_ALCHEMY_URL, accounts: [notNull(TESTNET_PRIVATE_KEY)] },
+    rinkeby: {
+      url: RINKEBY_ALCHEMY_URL,
+      accounts: [notNull(TESTNET_PRIVATE_KEY)],
+    },
     hardhat: {
       // Current as of May 5, 2021, 4:33pm.
       forking: { url: notNull(KOVAN_ALCHEMY_URL), blockNumber: 24669957 },

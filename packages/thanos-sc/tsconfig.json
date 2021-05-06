@@ -20,6 +20,6 @@
     "strict": true,
     "target": "es2018"
   },
-  "include": ["./tasks", "./test"],
+  "include": ["./scripts", "./tasks", "./test"],
   "files": ["./hardhat.config.ts"]
 }
