@@ -37,6 +37,31 @@ const theme: Theme = {
     "16rem",
     "32rem",
   ],
+  buttons: {
+    primary: {
+      backgroundColor: "blue.3",
+      boxShadow:
+        "inset 0 0 0 1px rgb(16 22 26 / 40%), inset 0 -1px 0 rgb(16 22 26 / 20%);",
+      cursor: "pointer",
+      userSelect: "none",
+      fontSize: 2,
+      height: "40px",
+
+      ":hover:not(:disabled)": {
+        backgroundColor: "blue.2",
+
+        ":active": {
+          backgroundColor: "blue.1",
+        },
+      },
+
+      ":disabled": {
+        backgroundColor: "rgba(19,124,189,.5)",
+        color: "disabled",
+        cursor: "not-allowed",
+      },
+    },
+  },
   breakpoints: ["576px", "768px", "992px", "1200px", "1400px"],
   styles: {
     root: {
@@ -48,30 +73,6 @@ const theme: Theme = {
         textDecoration: "none",
 
         ":hover": { textDecoration: "underline" },
-      },
-
-      button: {
-        backgroundColor: "blue.3",
-        boxShadow:
-          "inset 0 0 0 1px rgb(16 22 26 / 40%), inset 0 -1px 0 rgb(16 22 26 / 20%);",
-        cursor: "pointer",
-        userSelect: "none",
-        fontSize: 2,
-        height: "40px",
-
-        ":hover:not(:disabled)": {
-          backgroundColor: "blue.2",
-
-          ":active": {
-            backgroundColor: "blue.1",
-          },
-        },
-
-        ":disabled": {
-          backgroundColor: "rgba(19,124,189,.5)",
-          color: "disabled",
-          cursor: "not-allowed",
-        },
       },
     },
   },
