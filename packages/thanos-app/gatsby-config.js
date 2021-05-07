@@ -10,7 +10,7 @@ module.exports = {
         short_name: "Thanos",
         start_url: "/",
         display: "minimal-ui",
-        icon: "src/images/icon.png",
+        icon: "src/images/thanos.png",
       },
     },
     "gatsby-plugin-react-helmet",

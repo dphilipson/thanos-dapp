@@ -10,7 +10,7 @@ import {
   useState,
 } from "react";
 import { Button, Flex, jsx, Text } from "theme-ui";
-import { buttonSx, delayedFadeInSx } from "../styles";
+import { delayedFadeInSx } from "../styles";
 import { IS_PROD, USER_REJECTED } from "../util/constants";
 import { EthNetwork, useMetamask } from "../util/metamask";
 import { SnapState, ThanosClient } from "../util/thanos";
@@ -94,18 +94,12 @@ const SnapView = memo(function SnapView(): ReactElement {
       );
     }
     if (metamask.isConnecting) {
-      return (
-        <Button sx={buttonSx} disabled={true}>
-          Connecting…
-        </Button>
-      );
+      return <Button disabled={true}>Connecting…</Button>;
     }
     if (!metamask.currentAccount) {
       return (
         <Fragment>
-          <Button sx={buttonSx} onClick={metamask.connect}>
-            Connect to Metamask
-          </Button>
+          <Button onClick={metamask.connect}>Connect to Metamask</Button>
           {metamask.userRejected && (
             <Text mt="12px" sx={{ fontSize: 2 }} color="red.4">
               User rejected connection. Please try again.
@@ -115,11 +109,7 @@ const SnapView = memo(function SnapView(): ReactElement {
       );
     }
     if (isAwaitingSnapConfirm) {
-      return (
-        <Button sx={buttonSx} disabled={true}>
-          Snapping…
-        </Button>
-      );
+      return <Button disabled={true}>Snapping…</Button>;
     }
     switch (snapState) {
       case null:
@@ -132,9 +122,7 @@ const SnapView = memo(function SnapView(): ReactElement {
       case SnapState.NOT_STARTED:
         return (
           <Fragment>
-            <Button sx={buttonSx} onClick={snap}>
-              Snap
-            </Button>
+            <Button onClick={snap}>Snap</Button>
             {userRejectedSnap && (
               <Text mt="12px" sx={{ fontSize: 2 }} color="red.4">
                 User cancelled transaction.
@@ -160,7 +148,7 @@ const SnapView = memo(function SnapView(): ReactElement {
   }
 
   return (
-    <Flex sx={{ flexDirection: "column", alignItems: "center" }}>
+    <Flex sx={{ flexDirection: "column", alignItems: "center", fontSize: 3 }}>
       {renderContent()}
     </Flex>
   );

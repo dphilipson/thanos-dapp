@@ -1,5 +1,6 @@
 import React, { ReactElement } from "react";
 import { Helmet } from "react-helmet";
+import thanosIcon from "../images/thanos.png";
 
 const DEFAULT_DESCRIPTION = "The hardest choices require the strongest wills.";
 
@@ -29,6 +30,7 @@ const HtmlHead = ({
       { name: "twitter:creator:id", content: "1389683026762764290" },
       { name: "twitter:title", content: title },
       { name: "twitter:description", content: description },
+      { name: "twitter:image", content: thanosIcon },
     ]}
     link={[
       { href: "https://fonts.gstatic.com", rel: "preconnect" },
