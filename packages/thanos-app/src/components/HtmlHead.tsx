@@ -25,6 +25,7 @@ const HtmlHead = ({
       { property: "og:title", content: title },
       { property: "og:description", content: description },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: thanosIcon },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site:id", content: "1389683026762764290" },
       { name: "twitter:creator:id", content: "1389683026762764290" },
